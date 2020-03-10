@@ -58,7 +58,7 @@ P(:,:,1)=P1;
 P(:,:,2)=P2;
 F = [1 T ;0 1];  % state transition matrix
 H = [1 0];  % observation matrix
-R=1; % measurement noise
+R=[1 1]; % measurement noise
 Q=0.01;  % process noise
 G=[T^2/2;T];
 x_filter=zeros(2,c,n);  % store the filtered data
@@ -99,7 +99,7 @@ for t=1:n
         end
         P_predic=F*P(:,:,i)*F'+G*Q*G';  % update the covariance matrix of x_predic
         Z_predic(:,i)=H*x_predic(:,i);
-        S(:,:,i)=H*P_predic*H'+R;
+        S(:,:,i)=H*P_predic*H'+R(i);
         gate_volume(i)=2*sqrt(g_sigma); % area of the validation gate
     end
     
